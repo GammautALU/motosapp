@@ -1,0 +1,39 @@
+{% extends 'motosapp/base.html' %}
+
+{% block content %}
+<h1>Catálogo de Motos</h1>
+<a href="{% url 'crear_moto' %}" class="btn btn-green">+ Ingresar Nueva Moto</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Año</th>
+            <th>Cilindrada</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for moto in motos %}
+        <tr>
+            <td>{{ moto.nombre }}</td>
+            <td>{{ moto.marca }}</td>
+            <td>{{ moto.anio }}</td>
+            <td>{{ moto.cilindrada }} cc</td>
+            <td>${{ moto.precio }}</td>
+            <td>
+                <a href="{% url 'detalle_moto' moto.pk %}" class="btn btn-blue">Ver</a>
+                <a href="{% url 'editar_moto' moto.pk %}" class="btn btn-yellow">Editar</a>
+                <a href="{% url 'eliminar_moto' moto.pk %}" class="btn btn-red">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No hay motos registradas en el sistema.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

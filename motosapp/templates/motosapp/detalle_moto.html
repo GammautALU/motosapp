@@ -1,0 +1,13 @@
+{% extends 'motosapp/base.html' %}
+
+{% block content %}
+<h2>Detalles de la Moto</h2>
+<p><strong>Nombre:</strong> {{ moto.nombre }}</p>
+<p><strong>Marca:</strong> {{ moto.marca }}</p>
+<p><strong>Año:</strong> {{ moto.anio }}</p>
+<p><strong>Cilindrada:</strong> {{ moto.cilindrada }} cc</p>
+<p><strong>Precio:</strong> ${{ moto.precio }}</p>
+
+<a href="{% url 'editar_moto' moto.pk %}" class="btn btn-yellow">Editar</a>
+<a href="{% url 'lista_motos' %}" class="btn btn-gray">Volver a la Lista</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'motosapp/base.html' %}
+
+{% block content %}
+<h2>Ingresar Nueva Moto</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-green">Guardar Moto</button>
+    <a href="{% url 'lista_motos' %}" class="btn btn-gray">Cancelar</a>
+</form>
+{% endblock %}
