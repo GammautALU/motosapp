@@ -23,3 +23,24 @@ def crear_moto(request):
         form = MotoForm()
     return render(request, 'motosapp/crear_moto.html', {'form': form})
 
+from .forms import MotoForm, MotoEditarForm
+
+# UPDATE
+def editar_moto(request, pk):
+    moto = get_object_or_404(Moto, pk=pk)
+    if request.method == 'POST':
+        form = MotoEditarForm(request.POST, instance=moto)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_motos')
+    else:
+        form = MotoEditarForm(instance=moto)
+    return render(request, 'motosapp/editar_moto.html', {'form': form, 'moto': moto})
+
+# DELETE
+def eliminar_moto(request, pk):
+    moto = get_object_or_404(Moto, pk=pk)
+    if request.method == 'POST':
+        moto.delete()
+        return redirect('lista_motos')
+    return render(request, 'motosapp/eliminar_moto.html', {'moto': moto})
