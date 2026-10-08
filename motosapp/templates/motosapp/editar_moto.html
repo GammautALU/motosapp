@@ -1,12 +1,12 @@
 {% extends 'motosapp/base.html' %}
 
 {% block content %}
-<h2>Ingresar Nueva Moto</h2>
-<p class="subtitle">Completa los datos de la moto para agregarla al catálogo.</p>
+<h2>Editar Moto</h2>
+<p class="subtitle">Modificando: <strong>{{ moto.nombre }}</strong></p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-green">Guardar Moto</button>
+    <button type="submit" class="btn btn-yellow">Actualizar Moto</button>
     <a href="{% url 'lista_motos' %}" class="btn btn-gray">Cancelar</a>
 </form>
 {% endblock %}

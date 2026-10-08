@@ -1,0 +1,14 @@
+{% extends 'motosapp/base.html' %}
+
+{% block content %}
+<h2>Confirmar Eliminación</h2>
+<div class="danger-box">
+    <p>⚠️ ¿Seguro que quieres eliminar la moto <strong>{{ moto.nombre }}</strong> ({{ moto.marca }})?</p>
+    <p class="subtitle">Esta acción no se puede deshacer.</p>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-red">Sí, eliminar</button>
+    <a href="{% url 'lista_motos' %}" class="btn btn-gray">Cancelar</a>
+</form>
+{% endblock %}

@@ -2,11 +2,14 @@
 
 {% block content %}
 <h2>Detalles de la Moto</h2>
-<p><strong>Nombre:</strong> {{ moto.nombre }}</p>
-<p><strong>Marca:</strong> {{ moto.marca }}</p>
-<p><strong>Año:</strong> {{ moto.anio }}</p>
-<p><strong>Cilindrada:</strong> {{ moto.cilindrada }} cc</p>
-<p><strong>Precio:</strong> ${{ moto.precio }}</p>
+
+<div class="detail-grid">
+    <div class="detail-item"><small>Nombre</small><strong>{{ moto.nombre }}</strong></div>
+    <div class="detail-item"><small>Marca</small><strong>{{ moto.marca }}</strong></div>
+    <div class="detail-item"><small>Año</small><strong>{{ moto.anio }}</strong></div>
+    <div class="detail-item"><small>Cilindrada</small><strong>{{ moto.cilindrada }} cc</strong></div>
+    <div class="detail-item"><small>Precio</small><strong class="price">${{ moto.precio|floatformat:"0g" }}</strong></div>
+</div>
 
 <a href="{% url 'editar_moto' moto.pk %}" class="btn btn-yellow">Editar</a>
 <a href="{% url 'lista_motos' %}" class="btn btn-gray">Volver a la Lista</a>

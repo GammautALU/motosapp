@@ -1,8 +1,13 @@
 {% extends 'motosapp/base.html' %}
 
 {% block content %}
-<h1>Catálogo de Motos</h1>
-<a href="{% url 'crear_moto' %}" class="btn btn-green">+ Ingresar Nueva Moto</a>
+<div class="page-header">
+    <div>
+        <h1>Catálogo de Motos</h1>
+        <p class="subtitle">{{ motos|length }} moto{{ motos|length|pluralize }} registrada{{ motos|length|pluralize }}</p>
+    </div>
+    <a href="{% url 'crear_moto' %}" class="btn btn-green">+ Ingresar Nueva Moto</a>
+</div>
 
 <table>
     <thead>
@@ -18,11 +23,11 @@
     <tbody>
         {% for moto in motos %}
         <tr>
-            <td>{{ moto.nombre }}</td>
+            <td><strong>{{ moto.nombre }}</strong></td>
             <td>{{ moto.marca }}</td>
             <td>{{ moto.anio }}</td>
-            <td>{{ moto.cilindrada }} cc</td>
-            <td>${{ moto.precio }}</td>
+            <td><span class="badge">{{ moto.cilindrada }} cc</span></td>
+            <td class="price">${{ moto.precio|floatformat:"0g" }}</td>
             <td>
                 <a href="{% url 'detalle_moto' moto.pk %}" class="btn btn-blue">Ver</a>
                 <a href="{% url 'editar_moto' moto.pk %}" class="btn btn-yellow">Editar</a>
@@ -31,7 +36,7 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="6">No hay motos registradas en el sistema.</td>
+            <td colspan="6" class="empty">🏍️ No hay motos registradas en el sistema.</td>
         </tr>
         {% endfor %}
     </tbody>
