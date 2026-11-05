@@ -1,12 +1,16 @@
 {% extends 'motosapp/base.html' %}
 
+{% block title %}Nueva moto | MotoShop{% endblock %}
+
 {% block content %}
-<h2>Ingresar Nueva Moto</h2>
+<h1>Ingresar nueva moto</h1>
 <p class="subtitle">Completa los datos de la moto para agregarla al catálogo.</p>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-green">Guardar Moto</button>
-    <a href="{% url 'lista_motos' %}" class="btn btn-gray">Cancelar</a>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-green">Guardar moto</button>
+        <a href="{% url 'lista_motos' %}" class="btn btn-gray">Cancelar</a>
+    </div>
 </form>
 {% endblock %}

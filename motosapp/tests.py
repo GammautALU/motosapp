@@ -1,5 +1,10 @@
-from django.test import TestCase
+from io import BytesIO
+from tempfile import TemporaryDirectory
+
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase, override_settings
 from django.urls import reverse
+from PIL import Image
 
 from .models import Moto
 
@@ -9,9 +14,10 @@ class CrearMotoViewTests(TestCase):
         response = self.client.get(reverse('crear_moto'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, '<h2>Ingresar Nueva Moto</h2>')
+        self.assertContains(response, '<h1>Ingresar nueva moto</h1>')
         self.assertContains(response, 'name="nombre"')
         self.assertContains(response, 'name="marca"')
+        self.assertContains(response, 'enctype="multipart/form-data"')
 
     def test_crear_moto_guarda_y_vuelve_a_la_lista(self):
         response = self.client.post(
@@ -27,6 +33,33 @@ class CrearMotoViewTests(TestCase):
 
         self.assertRedirects(response, reverse('lista_motos'))
         self.assertTrue(Moto.objects.filter(nombre='Moto de prueba').exists())
+
+    def test_crear_moto_guarda_la_imagen(self):
+        image_buffer = BytesIO()
+        Image.new('RGB', (1, 1)).save(image_buffer, format='PNG')
+
+        with TemporaryDirectory() as media_root:
+            with override_settings(MEDIA_ROOT=media_root):
+                response = self.client.post(
+                    reverse('crear_moto'),
+                    {
+                        'nombre': 'Moto con imagen',
+                        'marca': 'Marca de prueba',
+                        'anio': 2024,
+                        'cilindrada': 250,
+                        'precio': 3000,
+                        'imagen': SimpleUploadedFile(
+                            'moto.png',
+                            image_buffer.getvalue(),
+                            content_type='image/png',
+                        ),
+                    },
+                )
+
+                self.assertRedirects(response, reverse('lista_motos'))
+                moto = Moto.objects.get(nombre='Moto con imagen')
+                self.assertTrue(moto.imagen.name.startswith('motos/'))
+                self.assertTrue(moto.imagen.storage.exists(moto.imagen.name))
 
 
 class EliminarMotoViewTests(TestCase):
@@ -45,7 +78,7 @@ class EliminarMotoViewTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Confirmar Eliminación')
+        self.assertContains(response, 'Confirmar eliminación')
         self.assertContains(response, 'Moto de prueba')
 
     def test_eliminar_moto_elimina_y_vuelve_a_la_lista(self):

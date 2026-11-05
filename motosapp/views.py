@@ -15,7 +15,7 @@ def detalle_moto(request, pk):
 # CREATE (Crear)
 def crear_moto(request):
     if request.method == 'POST':
-        form = MotoForm(request.POST)
+        form = MotoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('lista_motos')
@@ -29,7 +29,7 @@ from .forms import MotoForm, MotoEditarForm
 def editar_moto(request, pk):
     moto = get_object_or_404(Moto, pk=pk)
     if request.method == 'POST':
-        form = MotoEditarForm(request.POST, instance=moto)
+        form = MotoEditarForm(request.POST, request.FILES, instance=moto)
         if form.is_valid():
             form.save()
             return redirect('lista_motos')

@@ -6,7 +6,7 @@ from .models import Moto
 class MotoForm(forms.ModelForm):
     class Meta:
         model = Moto
-        fields = ['nombre', 'marca', 'anio', 'cilindrada', 'precio']
+        fields = ['nombre', 'marca', 'anio', 'cilindrada', 'precio', 'imagen']
 
     def clean_anio(self):
         anio = self.cleaned_data['anio']

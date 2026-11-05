@@ -6,3 +6,4 @@ class Moto(models.Model):
     anio = models.IntegerField()
     cilindrada = models.IntegerField()
     precio = models.IntegerField()
+    imagen = models.ImageField(upload_to='motos/', blank=True)
