@@ -1,0 +1,25 @@
+{% extends 'motosapp/base.html' %}
+
+{% block title %}{{ moto.nombre }} | MotoShop{% endblock %}
+
+{% block content %}
+<h1>Detalles de la moto</h1>
+
+{% if moto.imagen %}
+<img src="{{ moto.imagen.url }}" class="detail-image" alt="Imagen de {{ moto.nombre }}">
+{% endif %}
+
+<div class="detail-grid">
+    <div class="detail-item"><small>Nombre</small><strong>{{ moto.nombre }}</strong></div>
+    <div class="detail-item"><small>Marca</small><strong>{{ moto.marca }}</strong></div>
+    <div class="detail-item"><small>Año</small><strong>{{ moto.anio }}</strong></div>
+    <div class="detail-item"><small>Cilindrada</small><strong>{{ moto.cilindrada }} cc</strong></div>
+    <div class="detail-item"><small>Precio</small><strong class="price">${{ moto.precio|floatformat:"0g" }}</strong></div>
+</div>
+
+<div class="form-actions">
+    <a href="{% url 'editar_moto' moto.pk %}" class="btn btn-yellow">Editar moto</a>
+    <a href="{% url 'eliminar_moto' moto.pk %}" class="btn btn-red">Eliminar moto</a>
+    <a href="{% url 'lista_motos' %}" class="btn btn-gray">Volver al catálogo</a>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'motosapp/base.html' %}
+
+{% block title %}Catálogo de motos | MotoShop{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1>Catálogo de Motos</h1>
+        <p class="subtitle">{{ motos|length }} moto{{ motos|length|pluralize }} registrada{{ motos|length|pluralize }}</p>
+    </div>
+    <a href="{% url 'crear_moto' %}" class="btn btn-green">+ Ingresar Nueva Moto</a>
+</div>
+
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Año</th>
+                <th scope="col">Cilindrada</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for moto in motos %}
+            <tr>
+                <td>
+                    {% if moto.imagen %}
+                    <img src="{{ moto.imagen.url }}" class="moto-thumbnail" alt="Imagen de {{ moto.nombre }}">
+                    {% else %}
+                    <span class="subtitle">Sin imagen</span>
+                    {% endif %}
+                </td>
+                <td><strong>{{ moto.nombre }}</strong></td>
+                <td>{{ moto.marca }}</td>
+                <td>{{ moto.anio }}</td>
+                <td><span class="badge">{{ moto.cilindrada }} cc</span></td>
+                <td class="price">${{ moto.precio|floatformat:"0g" }}</td>
+                <td>
+                    <a href="{% url 'detalle_moto' moto.pk %}" class="btn btn-blue">Ver</a>
+                    <a href="{% url 'editar_moto' moto.pk %}" class="btn btn-yellow">Editar</a>
+                    <a href="{% url 'eliminar_moto' moto.pk %}" class="btn btn-red">Eliminar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="empty">🏍️ No hay motos registradas en el sistema.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
