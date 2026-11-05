@@ -95,7 +95,8 @@ class MotosAPIView(APIView):
                 "marca":moto.marca,
                 "anio":moto.anio,
                 "cilindrada":moto.cilindrada,
-                "precio":moto.precio
+                "precio":moto.precio,
+                "imagen":moto.imagen
             })
         return Response(datos, status=status.HTTP_200_OK)
 
@@ -105,6 +106,7 @@ class MotosAPIView(APIView):
         anio = request.data.get("anio")
         cilindrada = request.data.get("cilindrada")
         precio = request.data.get("precio")
+        imagen = request.data.get("imagen")
 
         if not nombre or not marca or not anio or not cilindrada or not precio:
             return Response({
@@ -116,7 +118,8 @@ class MotosAPIView(APIView):
             marca = marca,
             anio = anio,
             cilindrada = cilindrada,
-            precio = precio
+            precio = precio,
+            imagen = imagen
         )
 
         return Response({
@@ -127,7 +130,8 @@ class MotosAPIView(APIView):
                 "marca":moto.marca,
                 "anio":moto.anio,
                 "cilindrada":moto.cilindrada,
-                "precio":moto.precio               
+                "precio":moto.precio,
+                "imagen":moto.imagen           
             }
         }, status = status.HTTP_201_CREATED)
 
@@ -144,7 +148,8 @@ class MotoDetalleAPIView(APIView):
             "marca":moto.marca,
             "anio":moto.anio,
             "cilindrada":moto.cilindrada,
-            "precio":moto.precio            
+            "precio":moto.precio,
+            "imagen":moto.imagen           
         }, status = status.HTTP_200_OK)
 
     def delete(self, id):
@@ -160,6 +165,7 @@ class MotoDetalleAPIView(APIView):
         anio = request.data.get("anio")
         cilindrada = request.data.get("cilindrada")
         precio = request.data.get("precio")
+        imagen = request.data.get("imagen")
 
         if not nombre or not marca or not anio or not cilindrada or not precio:
             return Response({
@@ -172,5 +178,6 @@ class MotoDetalleAPIView(APIView):
             "marca":moto.marca,
             "anio":moto.anio,
             "cilindrada":moto.cilindrada,
-            "precio":moto.precio 
+            "precio":moto.precio,
+            "imagen":moto.imagen
         }, status = status.HTTP_200_OK)
